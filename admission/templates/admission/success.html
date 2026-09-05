@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Application Received | St. Jude's Academy{% endblock %}
+
+{% block extra_head %}
+    <style>
+        body { font-family: Georgia, serif; margin: 0; background: #f4f1e8; color: #17243a; }
+        main { max-width: 650px; margin: 100px auto; padding: 0 20px; text-align: center; }
+        section { background: white; padding: 42px 28px; border-top: 5px solid #b58b25; box-shadow: 0 8px 24px #17243a18; }
+        .number { display: inline-block; padding: 14px 20px; margin: 18px 0; background: #edf1f7; font: bold 1.4rem monospace; letter-spacing: .05em; }
+        a { color: #17243a; }
+    </style>
+{% endblock %}
+
+{% block content %}
+<main>
+    <section>
+        <h1>Application received</h1>
+        <p>Thank you, {{ application.first_name }}. Keep this tracking number for your records:</p>
+        <div class="number">{{ application.application_number }}</div>
+        <p>Your application is currently <strong>{{ application.get_status_display }}</strong>.</p>
+        <p><a href="{% url 'home' %}">Return to the academy homepage</a></p>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Result Sheet | St. Jude's Academy{% endblock %}
+
+{% block extra_head %}
+    <style>
+        body { font-family: Georgia, serif; margin: 0; background: #f4f1e8; color: #17243a; }
+        main { max-width: 900px; margin: 48px auto; padding: 0 20px; }
+        .result-header, main section { background: #fff; padding: 26px; margin-bottom: 22px; border-top: 5px solid #b58b25; box-shadow: 0 8px 24px #17243a18; }
+        .result-header { display: flex; justify-content: space-between; gap: 20px; align-items: start; }
+        h1 { margin: 0 0 8px; font-size: 2.2rem; }
+        h2 { margin-top: 0; font-size: 1.4rem; }
+        .meta { color: #536071; line-height: 1.6; }
+        .logout { color: #17243a; white-space: nowrap; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid #d7dbe0; }
+        th { background: #edf1f7; }
+        .summary { display: flex; gap: 28px; margin-top: 18px; color: #536071; }
+        .summary strong { color: #17243a; }
+        .empty { color: #536071; }
+        @media (max-width: 600px) { .result-header { display: block; } .logout { display: inline-block; margin-top: 16px; } th, td { padding: 10px 5px; font-size: .9rem; } }
+    </style>
+{% endblock %}
+
+{% block content %}
+<main>
+    <header class="result-header">
+        <div>
+            <h1>{{ student.first_name }} {{ student.last_name }}</h1>
+            <div class="meta">Admission number: {{ student.admission_number }}<br>Class: {{ student.class_name }}</div>
+        </div>
+        <a class="logout" href="{% url 'result_logout' %}">Sign out</a>
+    </header>
+    {% for group in result_groups %}
+    <section>
+        <h2>{{ group.academic_session }} | {{ group.term }}</h2>
+        <table>
+            <thead><tr><th>Subject</th><th>CA</th><th>Exam</th><th>Total</th><th>Grade</th><th>Remark</th></tr></thead>
+            <tbody>
+            {% for result in group.results %}
+                <tr><td>{{ result.subject.name }}</td><td>{{ result.ca_score }}</td><td>{{ result.exam_score }}</td><td>{{ result.total_score }}</td><td>{{ result.grade }}</td><td>{{ result.remark }}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="summary"><span>Total: <strong>{{ group.total }}</strong></span><span>Average: <strong>{{ group.average }}</strong></span></div>
+    </section>
+    {% empty %}
+    <section><p class="empty">No results have been published for this student yet.</p></section>
+    {% endfor %}
+</main>
+{% endblock %}

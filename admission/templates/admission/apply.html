@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Apply for Admission | St. Jude's Academy{% endblock %}
+
+{% block extra_head %}
+    <style>
+        body { font-family: Georgia, serif; margin: 0; background: #f4f1e8; color: #17243a; }
+        main { max-width: 760px; margin: 48px auto; padding: 0 20px; }
+        form { background: #fff; padding: 32px; border-top: 5px solid #b58b25; box-shadow: 0 8px 24px #17243a18; }
+        h1 { font-size: 2.4rem; margin-bottom: 8px; }
+        .intro { color: #536071; margin-bottom: 28px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; }
+        input, select, textarea { box-sizing: border-box; width: 100%; padding: 11px; border: 1px solid #b9bec5; font: inherit; }
+        .field { margin-bottom: 18px; }
+        .full { grid-column: 1 / -1; }
+        .errors { color: #a22b25; margin: 6px 0 0; padding-left: 18px; }
+        button { background: #17243a; color: white; border: 0; padding: 14px 24px; font: bold 1rem Georgia, serif; cursor: pointer; }
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .full { grid-column: auto; } form { padding: 22px; } }
+    </style>
+{% endblock %}
+
+{% block content %}
+<main>
+    <p><a href="{% url 'home' %}">St. Jude's Academy</a></p>
+    <h1>Admission application</h1>
+    <p class="intro">Complete the form below. Fields marked as required must be provided.</p>
+    <form method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
+        <div class="grid">
+            {% for field in form %}
+            <div class="field{% if field.name == 'address' %} full{% endif %}">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}<ul class="errors">{{ field.errors }}</ul>{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <button type="submit">Submit application</button>
+    </form>
+</main>
+{% endblock %}
