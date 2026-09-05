@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-9bvs1x9a&ca6=tezw7xj#pl3)e@h2()9@c#v=^fmj$o%(!%nx0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.108.72:8000', '192.168.108.72', 'https://skulproject.onrender.com']
+ALLOWED_HOSTS = ['192.168.108.72:8000', '192.168.108.72', 'skulproject.onrender.com']
 
 
 # Application definition
